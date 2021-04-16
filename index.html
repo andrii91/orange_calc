@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<style>
+			.active-tr {
+				display:  table-row !important;
+				background: lightgreen !important;
+			}
+			.pull-right {
+				float: right;
+			}
+			.header-data {
+				margin-top: 20px;
+			}
+
+			#calc {
+				margin-bottom: 60px;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="header">
+			<div class="container">
+
+				<h1 style="margin-top: 50px;">Чтобы сформировать данные для сайта перейдите по ссылке <a href="https://csvjson.com/csv2json" target="_blank">https://csvjson.com/csv2json</a> b загрузите выгрузку с clickup в формате csv</h1>
+
+				<div class="row">
+					<div class="col-12">
+						<div class="header-data">
+					 <label for="exampleFormControlTextarea1" class="form-label">Вставьте данные(json формат)</label>
+					  <textarea name="datajson" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+					<button id="addjson" class="btn btn-primary pull-right">Загрузить данные</button>
+				</div>
+
+					</div>
+					<div class="col">
+						<h2>Работник</h2>
+						<select class="form-select" id="user">
+						  <option selected value="">All</option>
+						  <option value="8826101">Dima Alivanov</option>
+						  <option value="8738866">yana.zhbanova</option>
+						  <option value="6849901">Andriy Lytvyn</option>
+						  <option value="4728828">Vadim</option>
+						  <option value="4715291">Evgeny Yakushev</option>
+						</select>
+					</div>
+					<div class="col">
+						<h2>День</h2>
+						<select class="form-select" id="date">
+							<option selected value="">All</option>
+						</select>
+					</div>
+					<div class="col">
+						<h2>Проект</h2>
+						<select class="form-select" id="project">
+							<option selected value="">All</option>
+							<option value="orange">orange</option>
+							<option value="shopify plugin">shopify plugin</option>
+							<option value="rebatekey web">rebatekey web</option>
+							<option value="es">es</option>
+							<option value="elite seller">elite seller</option>
+							<option value="no-tag">no-tag</option>
+							<option value="rk moile app">rk moile app</option>
+							<option value="andy priority">andy priority</option>
+						</select>
+					</div>
+					<div class="col-12">
+						<br>
+						<br>
+						<table id="calc" class="table table-striped">
+							<thead>
+								<tr>
+						      <th scope="col">Имя</th>
+						      <th scope="col">Дата</th>
+						      <th scope="col">Время, мс</th>
+						      <th scope="col">Время, Часы</th>
+						      <th scope="col">Таск</th>
+						      <th scope="col">Проект</th>
+						    </tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+					<!-- <div class="col">
+						<h2>Всего: <span id="allSumm"></span></h2>
+					</div>
+					<div class="col">
+						
+					</div> -->
+				</div>
+			</div>
+		</header>
+		<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+		<script type="text/javascript" src="js/date.format.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
+	</body>
+</html>
