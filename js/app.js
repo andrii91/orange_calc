@@ -64,9 +64,9 @@ $(document).ready(function () {
       $from.parents('tr').find('.time_tracked').text(time_tracked_all)
       $from.parents('tr').find('.date_text').text('за все время')
       $from.parents('tr').find('.time_hour').text(rounded(time_tracked_all / 3600000))
-      $from.parents('tr').find('.summ').text(rounded(time_tracked_all / 3600000) * $from.parents('tr').find('.summ').val())
 
       $('.' + $from.data('id') + '').hide();
+      $from.parents('tr').find('.summ').text(rounded(time_tracked_all / 3600000) * $from.parents('tr').find('.summ').val())
 
       $from.hide();
     })
@@ -78,6 +78,18 @@ $(document).ready(function () {
         $('.allSumm-item').css('display', 'flex');
 
       })
+
+       $('#user_id input').change(function(){
+        $('#calc td[data-user_id="'+$(this).attr('name')+'"]').parent().find('input').val($(this).val())
+
+        $('#calc td[data-user_id="'+$(this).attr('name')+'"]').parent().find('input').each(function(){
+          $(this).parents('tr').find('.summ').text($(this).parents('tr').find('.time_hour').text() * $(this).val())
+          $(this).parents('tr').addClass('summ_complate')
+          // $('.allSumm-item').show();
+          $('.allSumm-item').css('display', 'flex');
+        })
+      })
+       
 
   })
 
@@ -294,9 +306,10 @@ $(document).ready(function () {
       }
       $from.parents('tr').find('.time_hour').text(rounded(time_tracked_all / 3600000))
 
-      $from.parents('tr').find('.summ').text(rounded(time_tracked_all / 3600000) * $from.parents('tr').find('.summ').val())
 
       $('.' + $from.data('id') + '').hide();
+      
+      $from.parents('tr').find('.summ').text(rounded(time_tracked_all / 3600000) * $from.parents('tr').find('.summ').val())
 
       $from.hide();
     })
@@ -306,6 +319,18 @@ $(document).ready(function () {
          $(this).parents('tr').addClass('summ_complate')
         $('.allSumm-item').css('display', 'flex');
 
+      })
+
+
+      $('#user_id input').change(function(){
+        $('#calc td[data-user_id="'+$(this).attr('name')+'"]').parent().find('input').val($(this).val())
+
+        $('#calc td[data-user_id="'+$(this).attr('name')+'"]').parent().find('input').each(function(){
+          $(this).parents('tr').find('.summ').text($(this).parents('tr').find('.time_hour').text() * $(this).val())
+          $(this).parents('tr').addClass('summ_complate')
+          // $('.allSumm-item').show();
+          $('.allSumm-item').css('display', 'flex');
+        })
       })
   }
 
@@ -318,6 +343,8 @@ $(document).ready(function () {
 
     $('#allSumm').text('$'+summ_complate);
   })
+
+
 
 })
 
