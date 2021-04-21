@@ -51,7 +51,6 @@ $(document).ready(function () {
 
     $('.my-btn').click(function () {
       var $from = $(this);
-      $from.parents('tr').addClass('active-tr');
 
       var time_tracked_all = Number($from.find('.time_tracked').text());
       console.log($from.find('.time_tracked').text());
@@ -62,17 +61,24 @@ $(document).ready(function () {
       })
 
       $from.parents('tr').find('.time_tracked').text(time_tracked_all)
-      $from.parents('tr').find('.date_text').text('за все время')
+      if (dateFilter.length > 1) {
+
+      } else {
+        $from.parents('tr').find('.date_text').text('за все время')
+      }
       $from.parents('tr').find('.time_hour').text(rounded(time_tracked_all / 3600000))
 
-      $('.' + $from.data('id') + '').hide();
-      $from.parents('tr').find('.summ').text(rounded(time_tracked_all / 3600000) * $from.parents('tr').find('.summ').val())
 
+      $('.' + $from.data('id') + '').removeClass('summ_complate').hide();
+      
+      $from.parents('tr').find('.summ').text(rounded((time_tracked_all / 3600000) * $from.parents('tr').find('input').val()))
+
+      $from.parents('tr').addClass('active-tr summ_complate');
       $from.hide();
     })
 
      $('input[type="number"]').keyup(function(){
-        $(this).parents('tr').find('.summ_'+$(this).attr('name')).text($(this).parents('tr').find('.time_hour').text() * $(this).val())
+        $(this).parents('tr').find('.summ_'+$(this).attr('name')).text(rounded($(this).parents('tr').find('.time_hour').text() * $(this).val()))
         $(this).parents('tr').addClass('summ_complate')
         // $('.allSumm-item').show();
         $('.allSumm-item').css('display', 'flex');
@@ -83,11 +89,26 @@ $(document).ready(function () {
         $('#calc td[data-user_id="'+$(this).attr('name')+'"]').parent().find('input').val($(this).val())
 
         $('#calc td[data-user_id="'+$(this).attr('name')+'"]').parent().find('input').each(function(){
-          $(this).parents('tr').find('.summ').text($(this).parents('tr').find('.time_hour').text() * $(this).val())
+          $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour').text() * $(this).val()))
           $(this).parents('tr').addClass('summ_complate')
           // $('.allSumm-item').show();
           $('.allSumm-item').css('display', 'flex');
         })
+      })
+
+       $('select').change(function(){
+        var filterUserSumm = $('#user').val();
+        if ($('input[name="'+filterUserSumm+'"]').val() > 0) {
+
+          $('#calc td[data-user_id="'+filterUserSumm+'"]').parent().find('input').val($('input[name="'+filterUserSumm+'"]').val())
+
+          $('#calc td[data-user_id="'+filterUserSumm+'"]').parent().find('input').each(function(){
+            $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour').text() * $(this).val()))
+            $(this).parents('tr').addClass('summ_complate')
+
+            $('.allSumm-item').css('display', 'flex');
+          })
+        }
       })
        
 
@@ -288,7 +309,6 @@ $(document).ready(function () {
 
     $('.my-btn').click(function () {
       var $from = $(this);
-      $from.parents('tr').addClass('active-tr');
 
       var time_tracked_all = Number($from.find('.time_tracked').text());
       console.log($from.find('.time_tracked').text());
@@ -307,15 +327,16 @@ $(document).ready(function () {
       $from.parents('tr').find('.time_hour').text(rounded(time_tracked_all / 3600000))
 
 
-      $('.' + $from.data('id') + '').hide();
+      $('.' + $from.data('id') + '').removeClass('summ_complate').hide();
       
-      $from.parents('tr').find('.summ').text(rounded(time_tracked_all / 3600000) * $from.parents('tr').find('.summ').val())
+      $from.parents('tr').find('.summ').text(rounded((time_tracked_all / 3600000) * $from.parents('tr').find('input').val()))
 
+      $from.parents('tr').addClass('active-tr summ_complate');
       $from.hide();
     })
 
       $('input[type="number"]').keyup(function(){
-        $(this).parents('tr').find('.summ_'+$(this).attr('name')).text($(this).parents('tr').find('.time_hour').text() * $(this).val())
+        $(this).parents('tr').find('.summ_'+$(this).attr('name')).text(rounded($(this).parents('tr').find('.time_hour').text() * $(this).val()))
          $(this).parents('tr').addClass('summ_complate')
         $('.allSumm-item').css('display', 'flex');
 
@@ -326,11 +347,27 @@ $(document).ready(function () {
         $('#calc td[data-user_id="'+$(this).attr('name')+'"]').parent().find('input').val($(this).val())
 
         $('#calc td[data-user_id="'+$(this).attr('name')+'"]').parent().find('input').each(function(){
-          $(this).parents('tr').find('.summ').text($(this).parents('tr').find('.time_hour').text() * $(this).val())
+          $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour').text() * $(this).val()))
           $(this).parents('tr').addClass('summ_complate')
           // $('.allSumm-item').show();
           $('.allSumm-item').css('display', 'flex');
         })
+      })
+
+
+      $('select').change(function(){
+        var filterUserSumm = $('#user').val();
+        if ($('input[name="'+filterUserSumm+'"]').val() > 0) {
+
+          $('#calc td[data-user_id="'+filterUserSumm+'"]').parent().find('input').val($('input[name="'+filterUserSumm+'"]').val())
+
+          $('#calc td[data-user_id="'+filterUserSumm+'"]').parent().find('input').each(function(){
+            $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour').text() * $(this).val()))
+            $(this).parents('tr').addClass('summ_complate')
+
+            $('.allSumm-item').css('display', 'flex');
+          })
+        }
       })
   }
 
