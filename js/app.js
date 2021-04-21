@@ -383,12 +383,15 @@ $(document).ready(function () {
 
 
   $('#allSummBtn').click(function(){
-    var summ_complate = 0;
+    var summ_complate = 0,
+        summ_clock = 0;
     $('.summ_complate').each(function(){
       summ_complate = summ_complate + Number($(this).find('.summ').text())
+      summ_clock = summ_clock + Number($(this).find('.time_hour-input').val())
     })
 
-    $('#allSumm').text('$'+summ_complate);
+    $('#allSumm').text('$'+rounded(summ_complate));
+    $('#allClock').text(rounded(summ_clock) +" h");
   })
 
 
