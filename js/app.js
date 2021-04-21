@@ -148,9 +148,9 @@ $(document).ready(function () {
 
     $('select').change(function () {
       var filterUserSumm = $('#user').val();
-      if ($('input.h_summ[name="' + filterUserSumm + '"]').val() > 0) {
+      if ($('#user_id input[name="' + filterUserSumm + '"]').val() > 0) {
 
-        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').val($('input.h_summ[name="' + filterUserSumm + '"]').val())
+        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').val($('#user_id input[name="' + filterUserSumm + '"]').val())
 
         $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').each(function () {
           $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
@@ -425,9 +425,13 @@ $(document).ready(function () {
 
     $('select').change(function () {
       var filterUserSumm = $('#user').val();
-      if ($('input.h_summ[name="' + filterUserSumm + '"]').val() > 0) {
 
-        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').val($('input.h_summ[name="' + filterUserSumm + '"]').val())
+      console.log('filterUserSumm',filterUserSumm)
+      if ($('#user_id input[name="' + filterUserSumm + '"]').val() > 0) {
+
+        console.log($('input.h_summ[name="' + filterUserSumm + '"]').val())
+
+        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').val($('#user_id input[name="' + filterUserSumm + '"]').val())
 
         $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').each(function () {
           $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
@@ -478,9 +482,9 @@ $(document).ready(function () {
 
     $('select').change(function () {
       var filterUserSumm = $('#user').val();
-      if ($('input.h_summ[name="' + filterUserSumm + '"]').val() > 0) {
+      if ($('#user_id input[name="' + filterUserSumm + '"]').val() > 0) {
 
-        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').val($('input.h_summ[name="' + filterUserSumm + '"]').val())
+        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').val($('#user_id input[name="' + filterUserSumm + '"]').val())
 
         $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').each(function () {
           $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
