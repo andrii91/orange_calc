@@ -80,6 +80,7 @@ $(document).ready(function () {
     }
 
     /*формируем количество часов для разных проектов*/
+    filterProjectInfo('ilc', myData);
     filterProjectInfo('es', myData);
     filterProjectInfo('orange', myData);
     filterProjectInfo('es app', myData);
@@ -447,6 +448,7 @@ $(document).ready(function () {
     $('#projectTable tbody tr').remove();
     projectData = [];
     filterProjectInfo('es', myDataFilter);
+    filterProjectInfo('ilc', myDataFilter);
     filterProjectInfo('orange', myDataFilter);
     filterProjectInfo('es app', myDataFilter);
     filterProjectInfo('rk web', myDataFilter);
@@ -472,6 +474,21 @@ $(document).ready(function () {
     $('.time_hour-input').change(function () {
       $(this).attr('value', $(this).val())
       $(this).parents('tr').find('.summ').text(rounded($(this).val() * $(this).parents('tr').find('.h_summ').val()));
+    })
+
+    $('select').change(function () {
+      var filterUserSumm = $('#user').val();
+      if ($('input.h_summ[name="' + filterUserSumm + '"]').val() > 0) {
+
+        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').val($('input.h_summ[name="' + filterUserSumm + '"]').val())
+
+        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').each(function () {
+          $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
+          $(this).parents('tr').addClass('summ_complate')
+
+          $('.allSumm-item').show();
+        })
+      }
     })
 
   }
