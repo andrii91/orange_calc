@@ -22,6 +22,7 @@ $(document).ready(function () {
 
 
   $('#addjson').click(function () {
+    $(this).attr('disabled', 'disabled')
     jsondata = $(this).parent().find('textarea').val();
 
 
