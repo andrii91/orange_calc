@@ -92,8 +92,10 @@ function createOptionSelect(myDataSelect) {
 }
 
   $('#addjson').click(function () {
-    $(this).attr('disabled', 'disabled')
     jsondata = $(this).parent().find('textarea').val();
+    if (jsondata) {
+      $(this).attr('disabled', 'disabled')
+    }
 
 
     calcData = JSON.parse(jsondata);
@@ -135,7 +137,7 @@ function createOptionSelect(myDataSelect) {
 
 
     for (var i = projectData.length - 1; i >= 0; i--) {
-      $('#projectTable tbody').append('<tr><td>' + projectData[i].project + '</td><td class="time_hour"><input type="number" class="time_hour-input form-control" value="' + rounded(projectData[i].time / 3600000) + '" ></td><td><input width="50px" class="form-control h_summ" type="number" name="' + projectData[i].project.replace(/\s/g, '') + '" value="0"></td> <td class="summ summ_' + projectData[i].project.replace(/\s/g, '') + '"></td> <td><input type="number" class="sales" value="0"><td class="sales_summ"></td></tr>')
+      $('#projectTable tbody').append('<tr><td>' + projectData[i].project + '</td><td class="time_hour"><input type="number" class="time_hour-input form-control" value="' + rounded(projectData[i].time / 3600000) + '" ></td><td><input width="50px" class="form-control h_summ" type="number" name="' + projectData[i].project.replace(/\s/g, '') + '" value="0"></td> <td class="summ summ_' + projectData[i].project.replace(/\s/g, '') + '"></td> <td><input type="number" class="sales form-control " value="0"><td class="sales_summ"></td></tr>')
     }
 
 
@@ -528,7 +530,7 @@ function createOptionSelect(myDataSelect) {
 
 
     for (var i = projectData.length - 1; i >= 0; i--) {
-       $('#projectTable tbody').append('<tr><td>' + projectData[i].project + '</td><td class="time_hour"><input type="number" class="time_hour-input form-control" value="' + rounded(projectData[i].time / 3600000) + '" ></td><td><input width="50px" class="form-control h_summ" type="number" name="' + projectData[i].project.replace(/\s/g, '') + '" value="0"></td> <td class="summ summ_' + projectData[i].project.replace(/\s/g, '') + '"></td> <td><input type="number" class="sales" value="0"><td class="sales_summ"></td></tr>')
+       $('#projectTable tbody').append('<tr><td>' + projectData[i].project + '</td><td class="time_hour"><input type="number" class="time_hour-input form-control" value="' + rounded(projectData[i].time / 3600000) + '" ></td><td><input width="50px" class="form-control h_summ" type="number" name="' + projectData[i].project.replace(/\s/g, '') + '" value="0"></td> <td class="summ summ_' + projectData[i].project.replace(/\s/g, '') + '"></td> <td><input type="number" class="sales form-control " value="0"><td class="sales_summ"></td></tr>')
     }
 
 
