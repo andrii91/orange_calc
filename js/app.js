@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  var jsondata, calcData, myData = [],
+  var jsondata, calcData, myData = [], myDataSelect=[],
     projectData = [];
 
   function filterProjectInfo($tagProject, $myData) {
@@ -41,10 +41,10 @@ $(document).ready(function () {
     return +number.toFixed(2);
   }
 
-  var newDate = new Date();
+/*  var newDate = new Date();
   var days = new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0).getDate() + 1;
   for (var i = days - 1; i >= 1; i--) {
-    $('#date').append('<option value="' + (newDate.format("mm")) + '/' + formatDay(i) + '/' + newDate.format("yyyy") + '">' + formatDay(i) + '.' + newDate.format("mm") + '.' + newDate.format("yy") + '</option>')
+   $('#date').append('<option value="' + (newDate.format("mm")) + '/' + formatDay(i) + '/' + newDate.format("yyyy") + '">' + formatDay(i) + '.' + newDate.format("mm") + '.' + newDate.format("yy") + '</option>')
   }
 
   function formatDay(day) {
@@ -52,6 +52,43 @@ $(document).ready(function () {
     return day;
   }
 
+*/
+function createOptionSelect(myDataSelect) {
+  var myDataSelectNew = [];
+  for (var i = myDataSelect.length - 1; i >= 0; i--) {
+    const varS = myDataSelect[i].split(',');
+    myDataSelectNew.push(varS[0])
+  }
+
+
+  function getUniqTags(tags) {
+      var results = [];
+
+      tags.forEach(function (value) {
+          value = value.trim();
+
+          if (results.indexOf(value) === -1) {
+              results.push(value);
+          }
+      });
+
+      return results; 
+  }
+
+
+
+  myDataSelectNew = getUniqTags(myDataSelectNew);
+
+  console.log(myDataSelectNew)
+
+  for (var ik = myDataSelectNew.length - 1; ik >= 0; ik--) {
+    
+
+     $('#date').append('<option value="' + myDataSelectNew[ik] + '">' + myDataSelectNew[ik] + '</option>')
+
+  }
+
+}
 
   $('#addjson').click(function () {
     $(this).attr('disabled', 'disabled')
@@ -76,8 +113,12 @@ $(document).ready(function () {
     }
 
     for (var i = myData.length - 1; i >= 0; i--) {
+
+      myDataSelect.push(myData[i].dateText);
+
       $('#calc tbody').append('<tr class="' + myData[i].task_id + '"><td class="userID" data-user_id="' + myData[i].user_id + '">' + myData[i].user + '</td> <td class="date_text">' + myData[i].dateText + '</td> <td class="time_tracked">' + myData[i].time_tracked + '</td> <td class="time_hour"><input type="number" class="time_hour-input form-control" value="' + rounded(myData[i].time_tracked / 3600000) + '" ></td><td>' + myData[i].task_name + '</td> <td>' + myData[i].tag + '</td><td><input width="50px" class="form-control h_summ" type="number" name="' + myData[i].task_id + '" value="0"></td><td class="summ summ_' + myData[i].task_id + '"></td></td><td><button class="btn my-btn btn-primary" data-id="' + myData[i].task_id + '">обьединить</button></td> </tr>')
     }
+
 
     /*формируем количество часов для разных проектов*/
     filterProjectInfo('ilc', myData);
@@ -95,6 +136,9 @@ $(document).ready(function () {
     for (var i = projectData.length - 1; i >= 0; i--) {
       $('#projectTable tbody').append('<tr><td>' + projectData[i].project + '</td><td class="time_hour"><input type="number" class="time_hour-input form-control" value="' + rounded(projectData[i].time / 3600000) + '" ></td><td><input width="50px" class="form-control h_summ" type="number" name="' + projectData[i].project.replace(/\s/g, '') + '" value="0"></td> <td class="summ summ_' + projectData[i].project.replace(/\s/g, '') + '"></td> </tr>')
     }
+
+    createOptionSelect(myDataSelect);
+
 
 
 
@@ -364,7 +408,7 @@ $(document).ready(function () {
     for (var iu = myDataFilter.length - 1; iu >= 0; iu--) {
 
       // $('#calc tbody').append('<tr class="' + myDataFilter[iu].task_id + '"><td>' + myDataFilter[iu].user + '</td> <td class="date_text">' + myDataFilter[iu].dateText + '</td> <td class="time_tracked">' + myDataFilter[iu].time_tracked + '</td> <td class="time_hour">' + rounded(myDataFilter[iu].time_tracked / 3600000) + '</td><td>' + myDataFilter[iu].task_name + '</td> <td>' + myDataFilter[iu].tag + '</td><td><button class="btn my-btn btn-primary" data-id="' + myDataFilter[iu].task_id + '">обьединить</button></td> </tr>')
-      $('#calc tbody').append('<tr class="' + myDataFilter[iu].task_id + '"><td class="userID" data-user_id="' + myDataFilter[i].user_id + '">' + myDataFilter[iu].user + '</td> <td class="date_text">' + myDataFilter[iu].dateText + '</td> <td class="time_tracked">' + myDataFilter[iu].time_tracked + '</td> <td class="time_hour"><input type="number" class="time_hour-input form-control" value="' + rounded(myDataFilter[iu].time_tracked / 3600000) + '" ></td><td>' + myDataFilter[iu].task_name + '</td> <td>' + myDataFilter[iu].tag + '</td><td><input width="50px" class="form-control h_summ" type="number" name="' + myDataFilter[iu].task_id + '" value="0"></td><td class="summ summ_' + myDataFilter[iu].task_id + '"></td></td><td><button class="btn my-btn btn-primary" data-id="' + myDataFilter[iu].task_id + '">обьединить</button></td> </tr>')
+      $('#calc tbody').append('<tr class="' + myDataFilter[iu].task_id + '"><td class="userID" data-user_id="' + myDataFilter[iu].user_id + '">' + myDataFilter[iu].user + '</td> <td class="date_text">' + myDataFilter[iu].dateText + '</td> <td class="time_tracked">' + myDataFilter[iu].time_tracked + '</td> <td class="time_hour"><input type="number" class="time_hour-input form-control" value="' + rounded(myDataFilter[iu].time_tracked / 3600000) + '" ></td><td>' + myDataFilter[iu].task_name + '</td> <td>' + myDataFilter[iu].tag + '</td><td><input width="50px" class="form-control h_summ" type="number" name="' + myDataFilter[iu].task_id + '" value="0"></td><td class="summ summ_' + myDataFilter[iu].task_id + '"></td></td><td><button class="btn my-btn btn-primary" data-id="' + myDataFilter[iu].task_id + '">обьединить</button></td> </tr>')
     }
 
     $('.allSumm-item span').each(function(){
