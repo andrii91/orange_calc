@@ -128,7 +128,7 @@ $(document).ready(function () {
     })
 
     $('input.h_summ[type="number"]').keyup(function () {
-      $(this).parents('tr').find('.summ_' + $(this).attr('name')).text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
+      $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
       $(this).parents('tr').addClass('summ_complate')
       // $('.allSumm-item').show();
       $('.allSumm-item').show();
@@ -469,7 +469,7 @@ $(document).ready(function () {
 
 
     $('input.h_summ[type="number"]').keyup(function () {
-      $(this).parents('tr').find('.summ_' + $(this).attr('name')).text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
+      $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
       $(this).parents('tr').addClass('summ_complate')
       $('.allSumm-item').show();
 
