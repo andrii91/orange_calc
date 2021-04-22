@@ -78,6 +78,7 @@ function createOptionSelect(myDataSelect) {
 
 
   myDataSelectNew = getUniqTags(myDataSelectNew);
+  myDataSelectNew = myDataSelectNew.sort();
 
   console.log(myDataSelectNew)
 
@@ -134,11 +135,18 @@ function createOptionSelect(myDataSelect) {
 
 
     for (var i = projectData.length - 1; i >= 0; i--) {
-      $('#projectTable tbody').append('<tr><td>' + projectData[i].project + '</td><td class="time_hour"><input type="number" class="time_hour-input form-control" value="' + rounded(projectData[i].time / 3600000) + '" ></td><td><input width="50px" class="form-control h_summ" type="number" name="' + projectData[i].project.replace(/\s/g, '') + '" value="0"></td> <td class="summ summ_' + projectData[i].project.replace(/\s/g, '') + '"></td> </tr>')
+      $('#projectTable tbody').append('<tr><td>' + projectData[i].project + '</td><td class="time_hour"><input type="number" class="time_hour-input form-control" value="' + rounded(projectData[i].time / 3600000) + '" ></td><td><input width="50px" class="form-control h_summ" type="number" name="' + projectData[i].project.replace(/\s/g, '') + '" value="0"></td> <td class="summ summ_' + projectData[i].project.replace(/\s/g, '') + '"></td> <td><input type="number" class="sales" value="0"><td class="sales_summ"></td></tr>')
     }
+
 
     createOptionSelect(myDataSelect);
 
+    $('.sales').keyup(function(){
+      const priceFull = Number($(this).parents('tr').find('.summ').text()),
+            salesS = Number($(this).val());
+
+      $(this).parents('tr').find('.sales_summ').text(rounded(priceFull - priceFull*salesS/100 ))
+    })
 
 
 
@@ -194,7 +202,9 @@ function createOptionSelect(myDataSelect) {
       var filterUserSumm = $('#user').val();
       if ($('#user_id input[name="' + filterUserSumm + '"]').val() > 0) {
 
-        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').val($('#user_id input[name="' + filterUserSumm + '"]').val())
+        $('#calc td[data-user_id="' + filterUserSumm + '"]').each(function(){
+          $(this).parent().find('input.h_summ').val($('#user_id input[name="' + filterUserSumm + '"]').val());
+        })
 
         $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').each(function () {
           $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
@@ -455,6 +465,26 @@ function createOptionSelect(myDataSelect) {
     })
 
 
+
+
+    $('select').change(function () {
+      var filterUserSumm = $('#user').val();
+
+      if ($('#user_id input[name="' + filterUserSumm + '"]').val() > 0) {
+
+        $('#calc td[data-user_id="' + filterUserSumm + '"]').each(function(){
+          $(this).parent().find('input.h_summ').val($('#user_id input[name="' + filterUserSumm + '"]').val());
+        })
+
+        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').each(function () {
+          $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
+          $(this).parents('tr').addClass('summ_complate')
+
+          $('.allSumm-item').show();
+        })
+      }
+
+    })
     $('#user_id input').change(function () {
       $('#calc td[data-user_id="' + $(this).attr('name') + '"]').parent().find('input.h_summ').val($(this).val())
 
@@ -466,30 +496,20 @@ function createOptionSelect(myDataSelect) {
       })
     })
 
-
-    $('select').change(function () {
-      var filterUserSumm = $('#user').val();
-
-      console.log('filterUserSumm',filterUserSumm)
-      if ($('#user_id input[name="' + filterUserSumm + '"]').val() > 0) {
-
-        console.log($('input.h_summ[name="' + filterUserSumm + '"]').val())
-
-        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').val($('#user_id input[name="' + filterUserSumm + '"]').val())
-
-        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').each(function () {
-          $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
-          $(this).parents('tr').addClass('summ_complate')
-
-          $('.allSumm-item').show();
-        })
-      }
-    })
-
     $('.time_hour-input').change(function () {
       $(this).attr('value', $(this).val())
       $(this).parents('tr').find('.summ').text(rounded($(this).val() * $(this).parents('tr').find('.h_summ').val()));
     })
+
+
+    $('.sales').keyup(function(){
+      const priceFull = Number($(this).parents('tr').find('.summ').text()),
+            salesS = Number($(this).val());
+
+      $(this).parents('tr').find('.sales_summ').text(rounded(priceFull - priceFull*salesS/100) )
+    })
+
+
   }
 
   function taskFilterProject() {
@@ -508,7 +528,7 @@ function createOptionSelect(myDataSelect) {
 
 
     for (var i = projectData.length - 1; i >= 0; i--) {
-      $('#projectTable tbody').append('<tr><td>' + projectData[i].project + '</td><td class="time_hour"><input type="number" class="time_hour-input form-control" value="' + rounded(projectData[i].time / 3600000) + '" ></td><td><input width="50px" class="form-control h_summ" type="number" name="' + projectData[i].project.replace(/\s/g, '') + '" value="0"></td> <td class="summ summ_' + projectData[i].project.replace(/\s/g, '') + '"></td> </tr>')
+       $('#projectTable tbody').append('<tr><td>' + projectData[i].project + '</td><td class="time_hour"><input type="number" class="time_hour-input form-control" value="' + rounded(projectData[i].time / 3600000) + '" ></td><td><input width="50px" class="form-control h_summ" type="number" name="' + projectData[i].project.replace(/\s/g, '') + '" value="0"></td> <td class="summ summ_' + projectData[i].project.replace(/\s/g, '') + '"></td> <td><input type="number" class="sales" value="0"><td class="sales_summ"></td></tr>')
     }
 
 
@@ -528,7 +548,9 @@ function createOptionSelect(myDataSelect) {
       var filterUserSumm = $('#user').val();
       if ($('#user_id input[name="' + filterUserSumm + '"]').val() > 0) {
 
-        $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').val($('#user_id input[name="' + filterUserSumm + '"]').val())
+        $('#calc td[data-user_id="' + filterUserSumm + '"]').each(function(){
+          $(this).parent().find('input.h_summ').val($('#user_id input[name="' + filterUserSumm + '"]').val());
+        })
 
         $('#calc td[data-user_id="' + filterUserSumm + '"]').parent().find('input.h_summ').each(function () {
           $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
@@ -537,6 +559,24 @@ function createOptionSelect(myDataSelect) {
           $('.allSumm-item').show();
         })
       }
+    })
+
+
+    $('#user_id input').change(function () {
+      $('#calc td[data-user_id="' + $(this).attr('name') + '"]').parent().find('input.h_summ').val($(this).val())
+
+      $('#calc td[data-user_id="' + $(this).attr('name') + '"]').parent().find('input.h_summ').each(function () {
+        $(this).parents('tr').find('.summ').text(rounded($(this).parents('tr').find('.time_hour input').val() * $(this).val()))
+        $(this).parents('tr').addClass('summ_complate')
+        // $('.allSumm-item').show();
+        $('.allSumm-item').show();
+      })
+    })
+$('.sales').keyup(function(){
+      const priceFull = Number($(this).parents('tr').find('.summ').text()),
+            salesS = Number($(this).val());
+
+      $(this).parents('tr').find('.sales_summ').text(rounded(priceFull - priceFull*salesS/100 ))
     })
 
   }
@@ -549,11 +589,19 @@ function createOptionSelect(myDataSelect) {
       summ_clock = summ_clock + Number($(this).find('.time_hour-input').val())
     })
 
-    $('#allSumm').text('$' + rounded(summ_complate));
+    $('#allSumm').text(rounded(summ_complate));
     $('#allClock').text(rounded(summ_clock) + " h");
+
   })
 
 
+
+  $('.sales_input').keyup(function(){
+    const priceFull = Number($(this).parents('.allSumm-item').find('#allSumm').text()),
+            salesS = Number($(this).val());
+
+      $(this).parents('.allSumm-item').find('#salesSumm').text(rounded(priceFull - priceFull*salesS/100 ))
+  })
 
 
 })
